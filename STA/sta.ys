@@ -1,0 +1,24 @@
+# Initialize OpenSTA environment
+sta
+
+# Step 1: Read the Liberty file (for cell library information)
+# Provide the path to your liberty file here
+read_liberty sky130_fd_sc_hd__tt_025C_1v80.lib
+
+# Step 2: Read the synthesized Verilog netlist
+# Provide the path to your netlist file here
+read_verilog ALU_synth.v
+
+# Step 3: Link the design (after reading the netlist and liberty files)
+link ALU
+
+# Step 4: Source the SDC file for timing constraints
+# Provide the path to your SDC file here
+source constraints.sdc
+
+# Step 5: Perform checks (this includes basic checks such as setup/hold violations)
+report_checks -path_delay max -format full
+report_checks -path_delay min -format full
+
+#Step 6: Power Check
+report_power

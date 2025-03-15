@@ -1,0 +1,24 @@
+# Step 1: Read the RTL design file (your ALU Verilog file)
+read_verilog ALU.v
+
+# Step 2: Check and set the top module for the design
+hierarchy -check -top ALU
+
+# Step 3: Read the library file for the technology
+read_liberty -lib sky130_fd_sc_hd__tt_025C_1v80.lib
+
+# Step 4: Run synthesis
+synth
+
+# Step 5: Map flip-flops to standard cells using the specified library
+dfflibmap -liberty sky130_fd_sc_hd__tt_025C_1v80.lib
+
+# Step 6: Perform technology mapping using the ABC command
+abc -liberty sky130_fd_sc_hd__tt_025C_1v80.lib
+
+# Step 7: Clean up the design by removing unnecessary logic (optional)
+opt_clean
+
+# Step 8: Write out the synthesized gate-level netlist (Verilog format)
+write_verilog ALU_synth.v
+
